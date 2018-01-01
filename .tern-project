@@ -1,0 +1,23 @@
+{
+  "libs": [
+    "browser",
+    "ecmascript",
+    "jquery",
+    "react"
+  ],
+  "plugins": {
+    "commonjs": {},
+    "complete_strings": {},
+    "es_modules": {},
+    "doc_comment": {
+      "strong": true
+    },
+    "node": {}
+  },
+  "exclude": [
+    ".git/**",
+    "*.min.js"
+  ],
+  "loadEagerly": [],
+  "dontLoad": []
+}

@@ -1,37 +1,24 @@
-import {
-  Body,
-  Button,
-  Container,
-  Header,
-  Icon,
-  Left,
-  Right,
-  Title,
-} from 'native-base';
+import { Container } from 'native-base';
 import { StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
+import Header from '../components/header/Header';
+
 export default class HomeScreen extends Component {
+
+  static propTypes = {
+    navigation: PropTypes.object.isRequired,
+  }
   static navigationOptions = {
     title: 'Home',
   };
   render() {
     return (
       <Container> 
-        <Header>
-          <Left>
-            <Button transparent onPress={ () => this.props.navigation.navigate('DrawerOpen') }>
-            <Icon android='md-menu' ios='ios-menu' style={{fontSize:30}} />
-          </Button>
-        </Left> 
-        <Body>
-          <Title>
-            Browse
-          </Title>
-        </Body>
-        <Right />
-      </Header>
-    </Container>
+        <Header navigation={this.props.navigation} />
+        <Threads />
+      </Container>
     );
   }
 }
