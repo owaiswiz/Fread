@@ -1,45 +1,64 @@
-import { Body, List, ListItem, Text, Thumbnail } from 'native-base';
+import {
+  Badge,
+  Body,
+  List,
+  ListItem,
+  Text,
+  Thumbnail,
+  View,
+} from 'native-base';
 import { StyleSheet } from 'react-native';
 import React from 'react';
 
-const data = [
-  {
-    image: 'http://notusedrn.com/assets/wdg.png',
-    title: '/wdg/ - Web Development General',
-    description: '>The #1 archived general on /g/\nMultiline text\nline #3\nline#4\nline#5\nine#6'
-  },
-  {
-    image: 'http://notusedrn.com/assets/dpt.png',
-    title: '/dpt/ - Daily Programming General',
-    description: 'What are you working on today /g/ ?'
-  }
-];
+import { getThreads } from '../../api/Threads';
 
 export default class Threads extends React.Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  async getThreads(){
+    const threads = await getThreads("g");
+    this.setState({threads});
+  }
   _renderRow = (thread) => {
     return (
       <ListItem style={styles.temp} >
-        <Thumbnail square style={styles.thumbnailSize} source={require('../../assets/spoiler.png')} />
+        <Thumbnail square style={styles.thumbnailSize} source={{uri: thread.thumbnailURL}} />
         <Body>
-          <Text>{thread.title}</Text>
-          <Text note>{thread.description}</Text>
+          <View style={styles.textContainer} >
+            <Text style={styles.title} >{thread.title}</Text>
+            <Text note style={styles.no} >No.{thread.no} Created {thread.createdAt}</Text>
+            <Text note style={styles.text} >{thread.text}</Text>
+            <View style={styles.badgesContainer} >
+              <Badge primary style={styles.badges}>
+                <Text>{thread.noOfReplies} replies</Text>
+              </Badge>
+              <Badge success style={styles.badges}>
+                <Text>{thread.noOfImages} images</Text>
+              </Badge>
+            </View>
+          </View>
         </Body>
       </ListItem>
     );
   }
 
   render() {
-    return (
-      <List dataArray={data} renderRow={ (thread) => this._renderRow(thread) } />
-    );
+    if(this.state.threads)
+      return (
+        <List dataArray={this.state.threads} renderRow={ (thread) => this._renderRow(thread) } />
+      );
+    else {
+      this.getThreads();
+      return null;
+    }
   }
 }
 
 const styles = StyleSheet.create({
   temp: {
     alignItems: 'flex-start',
-    backgroundColor: 'red',
     marginLeft: 0,
     paddingLeft: 0,
     paddingRight: 0,
@@ -49,5 +68,26 @@ const styles = StyleSheet.create({
   thumbnailSize: {
     width: 70,
     height: 70,
+  },
+  textContainer: {
+    padding: 5,
+  },
+  title: {
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  text: {
+    color: 'black',
+  },
+  no: {
+    fontSize: 9,
+    paddingBottom: 5,
+  },
+  badgesContainer: {
+    padding: 5,
+    flexDirection: 'row',
+  },
+  badges: {
+    marginRight: 10,
   }
 });
