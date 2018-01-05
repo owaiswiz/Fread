@@ -11,16 +11,19 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 
 import { getThreads } from '../../api/Threads';
+import { parseText  } from '../../support/TextParser';
 
 export default class Threads extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
-  async getThreads(){
+
+  async getThreads() {
     const threads = await getThreads("g");
     this.setState({threads});
   }
+
   _renderRow = (thread) => {
     return (
       <ListItem style={styles.temp} >
@@ -29,7 +32,7 @@ export default class Threads extends React.Component {
           <View style={styles.textContainer} >
             <Text style={styles.title} >{thread.title}</Text>
             <Text note style={styles.no} >No.{thread.no} Created {thread.createdAt}</Text>
-            <Text note style={styles.text} >{thread.text}</Text>
+            <Text>{parseText(thread.text)}</Text>   
             <View style={styles.badgesContainer} >
               <Badge primary style={styles.badges}>
                 <Text>{thread.noOfReplies} replies</Text>
@@ -76,8 +79,8 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
   },
-  text: {
-    color: 'black',
+  flexRow: {
+    flexDirection: 'row',
   },
   no: {
     fontSize: 9,

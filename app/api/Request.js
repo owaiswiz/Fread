@@ -13,7 +13,7 @@ export const request = (url, modifiedSince = (new Date(0)).toUTCString()) => {
     .then((response) => response.json())
     .then((responseJSON) => {
       const entities = new AllHtmlEntities();
-      const responseJSONString = JSON.stringify(responseJSON).replace(/&quot;/gi,'\\"').replace(/<br>/g,"\\n").replace(/<wbr>/g,"");
+      const responseJSONString = JSON.stringify(responseJSON).replace(/&quot;/gi,'\\"').replace(/<br><br>/g,"\\n").replace(/<br>/g,"\\n").replace(/<wbr>/g,"");
       const decodedJSONString = entities.decode(responseJSONString);
       return JSON.parse(decodedJSONString);
     });
