@@ -20,7 +20,6 @@ import { request } from './Request';
 export const getThreads = (board, lastRequestAt) => {
   const requestURL = `http://a.4cdn.org/${board}/catalog.json`;
   return request(requestURL,lastRequestAt)
-    .then((response) => response.json())
     .then((responseJSON) => {
       let arrayOfThreads = [];
       responseJSON.map((page) => {

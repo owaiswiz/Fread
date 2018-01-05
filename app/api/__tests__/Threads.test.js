@@ -1,8 +1,10 @@
+/* global jasmine */
 import { getThreads } from '../Threads';
 
 let threads;
 
 beforeAll(async () => {
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
   threads = await getThreads("g");
 });
 

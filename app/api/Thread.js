@@ -16,7 +16,6 @@ import { request } from './Request';
 export const getReplies = (board, threadNo, lastRequestAt) => {
   const requestURL = `http://a.4cdn.org/${board}/thread/${threadNo}.json`;
   return request(requestURL,lastRequestAt)
-    .then((response) => response.json())
     .then((responseJSON) => {
       let arrayOfReplies = [];
       responseJSON.posts.map((rawReply) => {
